@@ -43,6 +43,12 @@ let respostas =
     ) ||
     new Array(itensChecklist.length).fill(null);
 
+let prazosChecklist =
+    JSON.parse(
+        localStorage.getItem("auditflow_prazos")
+    ) ||
+    new Array(itensChecklist.length).fill(null);
+
 let naoConformidades =
     JSON.parse(
         localStorage.getItem("auditflow_ncs")
@@ -71,15 +77,34 @@ document.addEventListener(
                 localStorage.getItem("auditflow_respostas")
             );
 
+        const prazosSalvos =
+            JSON.parse(
+                localStorage.getItem("auditflow_prazos")
+            );
+
         respostas =
             Array.isArray(respostasSalvas)
                 ? respostasSalvas
+                : new Array(itensChecklist.length).fill(null);
+
+        prazosChecklist =
+            Array.isArray(prazosSalvos)
+                ? prazosSalvos
                 : new Array(itensChecklist.length).fill(null);
 
         if (
             respostas.length !== itensChecklist.length
         ) {
             respostas =
+                new Array(
+                    itensChecklist.length
+                ).fill(null);
+        }
+
+        if (
+            prazosChecklist.length !== itensChecklist.length
+        ) {
+            prazosChecklist =
                 new Array(
                     itensChecklist.length
                 ).fill(null);
@@ -364,6 +389,24 @@ function criarChecklist() {
 
                 </div>
 
+                <div
+                    class="prazo-item"
+                    data-indice="${indice}"
+                    style="display: ${respostas[indice] === "nc" ? "block" : "none"}; margin-top: 10px;">
+
+                    <label for="prazoItem${indice}">
+                        Prazo de resolução
+                    </label>
+
+                    <input
+                        type="date"
+                        id="prazoItem${indice}"
+                        data-indice="${indice}"
+                        value="${prazosChecklist[indice] || ""}"
+                        ${respostas[indice] === "nc" ? "" : "disabled"}>
+
+                </div>
+
             `;
 
 
@@ -375,12 +418,42 @@ function criarChecklist() {
 
     configurarOpcoesChecklist();
 
+    configurarPrazosChecklist();
+
 }
 
 
 /* =====================================================
    OPÇÕES DO CHECKLIST
 ===================================================== */
+
+function configurarPrazosChecklist() {
+
+    document
+        .querySelectorAll(".prazo-item input")
+        .forEach(function (input) {
+
+            input.addEventListener(
+                "change",
+                function () {
+
+                    const indice =
+                        Number(
+                            input.dataset.indice
+                        );
+
+                    prazosChecklist[indice] =
+                        input.value || null;
+
+                    salvarPrazosChecklist();
+
+                }
+            );
+
+        });
+
+}
+
 
 function configurarOpcoesChecklist() {
 
@@ -411,6 +484,34 @@ function configurarOpcoesChecklist() {
 
                 salvarRespostas();
 
+                const prazoItem =
+                    document.querySelector(
+                        `.prazo-item[data-indice="${indice}"]`
+                    );
+
+                const prazoInput =
+                    prazoItem?.querySelector("input");
+
+                if (valor === "nc") {
+
+                    prazoItem.style.display = "block";
+                    prazoInput.disabled = false;
+
+                    if (!prazosChecklist[indice]) {
+                        prazoInput.value = "";
+                    } else {
+                        prazoInput.value = prazosChecklist[indice];
+                    }
+
+                } else {
+
+                    prazoItem.style.display = "none";
+                    prazoInput.disabled = true;
+                    prazoInput.value = "";
+                    prazosChecklist[indice] = null;
+                    salvarPrazosChecklist();
+
+                }
 
                 /*
                    Remove seleção das
@@ -792,8 +893,8 @@ function criarNCAutomatica(
 
 
     const prazo =
+        prazosChecklist[indice] ||
         calcularPrazo();
-
 
     const novaNC = {
 
@@ -1024,6 +1125,21 @@ function salvarNCs() {
 }
 
 
+function salvarPrazosChecklist() {
+
+    localStorage.setItem(
+
+        "auditflow_prazos",
+
+        JSON.stringify(
+            prazosChecklist
+        )
+
+    );
+
+}
+
+
 function salvarRespostas() {
 
     localStorage.setItem(
@@ -1035,6 +1151,8 @@ function salvarRespostas() {
         )
 
     );
+
+    salvarPrazosChecklist();
 
 }
 
@@ -1898,6 +2016,11 @@ function limparChecklist() {
             itensChecklist.length
         ).fill(null);
 
+    prazosChecklist =
+        new Array(
+            itensChecklist.length
+        ).fill(null);
+
     salvarRespostas();
 
     criarChecklist();
@@ -1923,6 +2046,11 @@ function reiniciarAuditoria() {
             itensChecklist.length
         ).fill(null);
 
+    prazosChecklist =
+        new Array(
+            itensChecklist.length
+        ).fill(null);
+
     auditoria = null;
 
     arquivoArtefato = null;
@@ -1933,6 +2061,10 @@ function reiniciarAuditoria() {
 
     localStorage.removeItem(
         "auditflow_arquivo"
+    );
+
+    localStorage.removeItem(
+        "auditflow_prazos"
     );
 
     salvarRespostas();
@@ -2066,10 +2198,6 @@ function exportarPdf() {
 
 }
 
-
-/* =====================================================
-   LIMPA FORMULÁRIO DE NC
-===================================================== */
 
 function limparCamposNC() {
 
