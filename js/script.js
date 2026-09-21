@@ -63,69 +63,93 @@ let arquivoArtefato =
     localStorage.getItem("auditflow_arquivo") ||
     null;
 
+let nivelNC =
+    JSON.parse(
+        localStorage.getItem("auditflow_nivelNC")
+    ) ||
+    new Array(itensChecklist.length).fill(null);
 
 /* =====================================================
    INICIALIZAÇÃO
 ===================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
 
-        const respostasSalvas =
-            JSON.parse(
-                localStorage.getItem("auditflow_respostas")
-            );
+            const respostasSalvas =
+                JSON.parse(
+                    localStorage.getItem("auditflow_respostas")
+                );
 
-        const prazosSalvos =
-            JSON.parse(
-                localStorage.getItem("auditflow_prazos")
-            );
+            const prazosSalvos =
+                JSON.parse(
+                    localStorage.getItem("auditflow_prazos")
+                );
 
-        respostas =
-            Array.isArray(respostasSalvas)
-                ? respostasSalvas
-                : new Array(itensChecklist.length).fill(null);
+            const nivelSalvo =
+                JSON.parse(
+                    localStorage.getItem("auditflow_nivelNC")
+                );
 
-        prazosChecklist =
-            Array.isArray(prazosSalvos)
-                ? prazosSalvos
-                : new Array(itensChecklist.length).fill(null);
-
-        if (
-            respostas.length !== itensChecklist.length
-        ) {
             respostas =
-                new Array(
-                    itensChecklist.length
-                ).fill(null);
-        }
+                Array.isArray(respostasSalvas)
+                    ? respostasSalvas
+                    : new Array(itensChecklist.length).fill(null);
 
-        if (
-            prazosChecklist.length !== itensChecklist.length
-        ) {
             prazosChecklist =
-                new Array(
-                    itensChecklist.length
-                ).fill(null);
+                Array.isArray(prazosSalvos)
+                    ? prazosSalvos
+                    : new Array(itensChecklist.length).fill(null);
+
+            nivelNC =
+                Array.isArray(nivelSalvo)
+                    ? nivelSalvo
+                    : new Array(itensChecklist.length).fill(null);
+
+            if (
+                respostas.length !== itensChecklist.length
+            ) {
+                respostas =
+                    new Array(
+                        itensChecklist.length
+                    ).fill(null);
+            }
+
+            if (
+                prazosChecklist.length !== itensChecklist.length
+            ) {
+                prazosChecklist =
+                    new Array(
+                        itensChecklist.length
+                    ).fill(null);
+            }
+
+            if (
+                nivelNC.length !== itensChecklist.length
+            ) {
+                nivelNC =
+                    new Array(
+                        itensChecklist.length
+                    ).fill(null);
+            }
+
+            criarChecklist();
+
+            configurarMenu();
+
+            configurarBotoes();
+
+            configurarAnexoArquivo();
+
+            carregarData();
+
+            atualizarNCs();
+
+            atualizarDashboard();
+
         }
-
-        criarChecklist();
-
-        configurarMenu();
-
-        configurarBotoes();
-
-        configurarAnexoArquivo();
-
-        carregarData();
-
-        atualizarNCs();
-
-        atualizarDashboard();
-
-    }
-);
+    );
 
 
 /* =====================================================
@@ -394,16 +418,55 @@ function criarChecklist() {
                     data-indice="${indice}"
                     style="display: ${respostas[indice] === "nc" ? "block" : "none"}; margin-top: 10px;">
 
-                    <label for="prazoItem${indice}">
-                        Prazo de resolução
-                    </label>
+                    <div style="display: flex; gap: 15px; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <label for="prazoItem${indice}">
+                                Prazo de resolução
+                            </label>
 
-                    <input
-                        type="date"
-                        id="prazoItem${indice}"
-                        data-indice="${indice}"
-                        value="${prazosChecklist[indice] || ""}"
-                        ${respostas[indice] === "nc" ? "" : "disabled"}>
+                            <input
+                                type="date"
+                                id="prazoItem${indice}"
+                                data-indice="${indice}"
+                                value="${prazosChecklist[indice] || ""}"
+                                ${respostas[indice] === "nc" ? "" : "disabled"}>
+                        </div>
+
+                        <div style="flex: 1;">
+                            <label>Nível da NC</label>
+
+                            <div class="opcoes-nivel">
+
+                                <button
+                                    class="opcao-nivel simples ${nivelNC[indice] === "simples" ? "selecionado" : ""}"
+                                    data-indice="${indice}"
+                                    data-valor="simples"
+                                    ${respostas[indice] === "nc" ? "" : "disabled"}>
+
+                                    Simples
+                                </button>
+
+                                <button
+                                    class="opcao-nivel media ${nivelNC[indice] === "media" ? "selecionado" : ""}"
+                                    data-indice="${indice}"
+                                    data-valor="media"
+                                    ${respostas[indice] === "nc" ? "" : "disabled"}>
+
+                                    Média
+                                </button>
+
+                                <button
+                                    class="opcao-nivel complexa ${nivelNC[indice] === "complexa" ? "selecionado" : ""}"
+                                    data-indice="${indice}"
+                                    data-valor="complexa"
+                                    ${respostas[indice] === "nc" ? "" : "disabled"}>
+
+                                    Complexa
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -419,6 +482,8 @@ function criarChecklist() {
     configurarOpcoesChecklist();
 
     configurarPrazosChecklist();
+
+    configurarNivelNC();
 
 }
 
@@ -451,6 +516,62 @@ function configurarPrazosChecklist() {
             );
 
         });
+
+}
+
+
+function configurarNivelNC() {
+
+    const botoesNivel =
+        document.querySelectorAll(
+            ".opcao-nivel"
+        );
+
+    botoesNivel.forEach(
+        function (botao) {
+
+            botao.addEventListener(
+                "click",
+                function () {
+
+                    const indice =
+                        Number(
+                            botao.dataset.indice
+                        );
+
+                    const valor =
+                        botao.dataset.valor;
+
+                    nivelNC[indice] = valor;
+
+                    salvarNivelNC();
+
+                    const grupo =
+                        botao.parentElement;
+
+                    grupo
+                        .querySelectorAll(
+                            ".opcao-nivel"
+                        )
+                        .forEach(
+                            function (b) {
+
+                                b.classList.remove(
+                                    "selecionado"
+                                );
+
+                            }
+                        );
+
+                    botao.classList.add(
+                        "selecionado"
+                    );
+
+                }
+            );
+
+        }
+    );
 
 }
 
@@ -497,6 +618,13 @@ function configurarOpcoesChecklist() {
                     prazoItem.style.display = "block";
                     prazoInput.disabled = false;
 
+                    const botoesNivel =
+                        prazoItem.querySelectorAll(".opcao-nivel");
+
+                    botoesNivel.forEach(function (btn) {
+                        btn.disabled = false;
+                    });
+
                     if (!prazosChecklist[indice]) {
                         prazoInput.value = "";
                     } else {
@@ -510,6 +638,17 @@ function configurarOpcoesChecklist() {
                     prazoInput.value = "";
                     prazosChecklist[indice] = null;
                     salvarPrazosChecklist();
+
+                    const botoesNivel =
+                        prazoItem.querySelectorAll(".opcao-nivel");
+
+                    botoesNivel.forEach(function (btn) {
+                        btn.disabled = true;
+                        btn.classList.remove("selecionado");
+                    });
+
+                    nivelNC[indice] = null;
+                    salvarNivelNC();
 
                 }
 
@@ -896,6 +1035,10 @@ function criarNCAutomatica(
         prazosChecklist[indice] ||
         calcularPrazo();
 
+    const nivel =
+        nivelNC[indice] ||
+        "Nível 1";
+
     const novaNC = {
 
         id: id,
@@ -907,6 +1050,8 @@ function criarNCAutomatica(
             auditor,
 
         prazo: prazo,
+
+        nivel: nivel,
 
         status:
             "Aberta",
@@ -1037,6 +1182,13 @@ function salvarNC() {
             )
             .value;
 
+    const nivel =
+        document
+            .getElementById(
+                "ncNivel"
+            )
+            .value;
+
 
     if (!descricao) {
 
@@ -1062,6 +1214,10 @@ function salvarNC() {
         prazo:
             prazo ||
             calcularPrazo(),
+
+        nivel:
+            nivel ||
+            "simples",
 
         status:
             "Aberta",
@@ -1140,6 +1296,21 @@ function salvarPrazosChecklist() {
 }
 
 
+function salvarNivelNC() {
+
+    localStorage.setItem(
+
+        "auditflow_nivelNC",
+
+        JSON.stringify(
+            nivelNC
+        )
+
+    );
+
+}
+
+
 function salvarRespostas() {
 
     localStorage.setItem(
@@ -1153,6 +1324,7 @@ function salvarRespostas() {
     );
 
     salvarPrazosChecklist();
+    salvarNivelNC();
 
 }
 
@@ -1283,6 +1455,13 @@ function atualizarNCs() {
 
                 <td>
                     ${formatarData(nc.prazo)}
+                </td>
+
+
+                <td>
+                    <span class="badge-nivel ${nc.nivel ? nc.nivel.toLowerCase() : "nao-definido"}">
+                        ${nc.nivel || "Não definido"}
+                    </span>
                 </td>
 
 
@@ -2051,6 +2230,11 @@ function reiniciarAuditoria() {
             itensChecklist.length
         ).fill(null);
 
+    nivelNC =
+        new Array(
+            itensChecklist.length
+        ).fill(null);
+
     auditoria = null;
 
     arquivoArtefato = null;
@@ -2065,6 +2249,10 @@ function reiniciarAuditoria() {
 
     localStorage.removeItem(
         "auditflow_prazos"
+    );
+
+    localStorage.removeItem(
+        "auditflow_nivelNC"
     );
 
     salvarRespostas();
@@ -2146,6 +2334,8 @@ function exportarPdf() {
                             <th>#</th>
                             <th>Pergunta</th>
                             <th>Resposta</th>
+                            <th>Prazo de Resolução</th>
+                            <th>Nível</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2156,11 +2346,15 @@ function exportarPdf() {
                                 nc: "Não Conforme",
                                 na: "N/A"
                             };
+                            const prazo = valor === "nc" ? formatarData(prazosChecklist[indice]) : "-";
+                            const nivel = valor === "nc" ? (nivelNC[indice] || "-") : "-";
                             return `
                                 <tr>
                                     <td>${indice + 1}</td>
                                     <td>${item}</td>
                                     <td>${legenda[valor] || "Não avaliado"}</td>
+                                    <td>${prazo}</td>
+                                    <td>${nivel}</td>
                                 </tr>
                             `;
                         }).join("")}
@@ -2218,6 +2412,12 @@ function limparCamposNC() {
     document
         .getElementById(
             "ncPrazo"
+        )
+        .value = "";
+
+    document
+        .getElementById(
+            "ncNivel"
         )
         .value = "";
 
