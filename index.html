@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AuditQuality- Auditoria de Qualidade</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="header">
+        <div class="logo">
+            <img src="img/logoPuc.jpg" alt="Logo PUCPR" class="logo-imagem">
+            <div class="logo-texto">
+                <h1>AuditQuality</h1>
+                <p>Ferramenta de Auditoria de Qualidade</p>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- MENU -->
+    <nav class="menu">
+
+        <button class="menu-btn" data-page="representantesQualidade">
+            Representantes de Qualidade
+        </button>           
+
+        <button class="menu-btn active" data-page="dashboard">
+            Dashboard
+        </button>
+
+        <button class="menu-btn" data-page="auditoria">
+            Nova Auditoria
+        </button>
+
+        <button class="menu-btn" data-page="ncs">
+            Não Conformidades
+        </button>
+
+        <button class="menu-btn" data-page="comunicacao">
+            Comunicação
+        </button>
+
+    </nav>
+
+
+    <main class="container">
+
+
+        <!-- ========================= -->
+        <!-- REPRESENTANTES DE QUALIDADE -->
+        <!-- ========================= -->
+
+        <section id="representantesQualidade" class="page">
+
+            <h2>Representantes de Qualidade</h2>
+
+            <p class="repositorio-link">
+                Repositório do projeto:
+                <a
+                    href="https://github.com/AdrianoProenca06/AudityQuality"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    github.com/AdrianoProenca06/AudityQuality
+                </a>
+            </p>
+
+            <div class="representantes">
+
+                <div class="representante-card">
+
+                    <img src="img/Adriano.jpg" alt="Adriano" class="representante-foto">
+
+                    <h3>Adriano</h3>
+
+                    <p>Representante de Qualidade</p>
+
+                </div>
+
+                <div class="representante-card">
+
+                    <img src="img/Bernardo.jpg" alt="Bernardo" class="representante-foto">
+
+                    <h3>Bernardo</h3>
+
+                    <p>Representante de Qualidade</p>
+
+                </div>
+
+                <div class="representante-card">
+
+                    <img src="img/Matheus.png" alt="Matheus" class="representante-foto">
+
+                    <h3>Matheus</h3>
+
+                    <p>Representante de Qualidade</p>
+
+                </div>
+
+                <div class="representante-card">
+
+                    <img src="img/Joao.jpg" alt="João" class="representante-foto">
+
+                    <h3>João</h3>
+
+                    <p>Representante de Qualidade</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- DASHBOARD -->
+        <!-- ========================= -->
+
+
+        <section id="dashboard" class="page active">
+
+            <h2>Dashboard</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <p>Aderência</p>
+                    <strong id="dashboardAderencia">0%</strong>
+                </div>
+
+                <div class="card">
+                    <p>Itens conformes</p>
+                    <strong id="dashboardConformes">0</strong>
+                </div>
+
+                <div class="card">
+                    <p>NCs abertas</p>
+                    <strong id="dashboardAbertas">0</strong>
+                </div>
+
+                <div class="card">
+                    <p>NCs resolvidas</p>
+                    <strong id="dashboardResolvidas">0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h3>Resultado da Auditoria</h3>
+
+                <p id="resultadoAuditoria">
+                    Nenhuma auditoria realizada.
+                </p>
+
+                <div class="progress">
+                    <div
+                        id="dashboardProgress"
+                        class="progress-bar">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h3>Não Conformidades Pendentes</h3>
+
+                <div id="dashboardNCs">
+                    <p>Nenhuma não conformidade registrada.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================= -->
+        <!-- NOVA AUDITORIA -->
+        <!-- ========================= -->
+
+        <section id="auditoria" class="page">
+
+            <h2>Nova Auditoria</h2>
+
+
+            <div class="panel">
+
+                <h3>Informações da Auditoria</h3>
+
+                <div class="form-grid">
+
+                    <div>
+                        <label>Artefato auditado</label>
+
+                        <input
+                            type="text"
+                            id="processo"
+                            placeholder="Ex.: PDF, checklist, processo, documento, evidência, etc.">
+                    </div>
+
+
+                    <div>
+                        <label>Anexar arquivo do artefato</label>
+
+                        <input
+                            type="file"
+                            id="arquivoArtefato">
+
+                        <div
+                            id="arquivoInfo"
+                            class="arquivo-info">
+
+                            <span id="arquivoNome"></span>
+
+                            <button
+                                type="button"
+                                class="btn-remover-arquivo"
+                                id="removerArquivo">
+
+                                Remover
+
+                            </button>
+
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label>Auditor</label>
+
+                        <input
+                            type="text"
+                            id="auditor"
+                            placeholder="Digite o nome do auditor">
+                    </div>
+
+
+                    <div>
+                        <label>Data</label>
+
+                        <input
+                            type="date"
+                            id="dataAuditoria">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="panel">
+
+                <h3>Checklist da Auditoria</h3>
+
+                <p class="descricao">
+                    Avalie cada pergunta como Conforme,
+                    Não Conforme ou N/A.
+                </p>
+
+
+                <div id="checklist"></div>
+
+
+                <!-- RESULTADO -->
+
+                <div class="resultado">
+
+                    <h3>
+                        Aderência:
+                        <span id="aderencia">
+                            0%
+                        </span>
+                    </h3>
+
+                    <div class="progress">
+
+                        <div
+                            id="progress"
+                            class="progress-bar">
+                        </div>
+
+                    </div>
+
+                    <p id="contagem">
+                        0 conformes / 0 aplicáveis
+                    </p>
+
+                </div>
+
+
+                <div class="botoes">
+
+                    <button
+                        class="btn principal"
+                        id="finalizarAuditoria">
+
+                        Finalizar Auditoria
+
+                    </button>
+
+                    <button
+                        class="btn secundario"
+                        id="exportarPdf">
+
+                        Exportar PDF
+
+                    </button>
+
+
+                    <button
+                        class="btn secundario"
+                        id="limparChecklist">
+
+                        Limpar
+
+                    </button>
+
+                    <button
+                        class="btn perigo"
+                        id="reiniciarAuditoria">
+
+                        Reiniciar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================= -->
+        <!-- NÃO CONFORMIDADES -->
+        <!-- ========================= -->
+
+        <section id="ncs" class="page">
+
+            <h2>Não Conformidades</h2>
+
+
+            <div class="panel">
+
+                <div class="titulo-acoes">
+
+                    <h3>Registro de NCs</h3>
+
+                    <button
+                        class="btn perigo"
+                        id="abrirModal">
+
+                        + Registrar NC
+
+                    </button>
+
+                </div>
+
+
+                <div class="tabela-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Descrição / origem</th>
+
+                                <th>Classificação</th>
+
+                                <th>Responsável / prazo</th>
+
+                                <th>Status</th>
+
+                                <th>Escalonamento</th>
+
+                                <th>Datas de controle</th>
+
+                                <th>Ação</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tabelaNC">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================= -->
+        <!-- COMUNICAÇÃO -->
+        <!-- ========================= -->
+
+        <section id="comunicacao" class="page">
+
+            <h2>Comunicação de NC</h2>
+
+
+            <div class="panel">
+
+                <h3>Enviar comunicação</h3>
+
+                <p class="descricao">
+                    Selecione uma NC para gerar uma comunicação completa com prazo,
+                    classificação, escalonamento e ação corretiva.
+                </p>
+
+                <label>
+                    Selecione uma NC
+                </label>
+
+                <select id="selectNC">
+
+                    <option value="">
+                        Selecione uma NC
+                    </option>
+
+                </select>
+
+
+                <label>
+                    E-mail do destinatário
+                </label>
+
+                <input
+                    type="email"
+                    id="emailDestinatario"
+                    placeholder="nome@empresa.com">
+
+
+                <label>
+                    Mensagem
+                </label>
+
+                <textarea
+                    id="mensagem"
+                    readonly>
+                </textarea>
+
+
+                <button
+                    class="btn principal"
+                    id="enviarEmail">
+
+                    Enviar por e-mail
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ========================= -->
+    <!-- MODAL DE NC -->
+    <!-- ========================= -->
+
+    <div
+        id="modal"
+        class="modal">
+
+        <div class="modal-conteudo">
+
+            <h2>Registrar Não Conformidade</h2>
+
+
+            <label>
+                Descrição
+            </label>
+
+            <textarea
+                id="ncDescricao"
+                placeholder="Descreva a não conformidade">
+            </textarea>
+
+
+            <label>
+                Responsável
+            </label>
+
+            <input
+                type="text"
+                id="ncResponsavel"
+                placeholder="Nome do responsável">
+
+
+            <label>
+                Prazo limite
+            </label>
+
+            <input
+                type="datetime-local"
+                id="ncPrazo">
+
+            <p class="campo-ajuda" id="ncPrazoAjuda">
+                O prazo será preenchido automaticamente após escolher a classificação.
+            </p>
+
+            <label>
+                Classificação da NC
+            </label>
+
+            <select id="ncNivel">
+                <option value="">Selecione uma classificação</option>
+                <option value="simples">Simples - 1 hora</option>
+                <option value="media">Média - 3 horas</option>
+                <option value="complexa">Complexa - 1 dia</option>
+            </select>
+
+            <div class="form-grid">
+                <div>
+                    <label for="ncDataIdentificacao">Data de identificação</label>
+                    <input type="date" id="ncDataIdentificacao">
+                </div>
+
+                <div>
+                    <label for="ncStatus">Status da NC</label>
+                    <select id="ncStatus">
+                        <option value="Aberta">Aberta</option>
+                        <option value="Em tratamento">Em tratamento</option>
+                        <option value="Aguardando verificação">Aguardando verificação</option>
+                        <option value="Resolvida">Resolvida</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="ncAcaoCorretiva">Ação corretiva indicada</label>
+            <textarea id="ncAcaoCorretiva" placeholder="Descreva a ação necessária para eliminar a causa da NC"></textarea>
+
+            <label for="ncObservacoes">Observações</label>
+            <textarea id="ncObservacoes" placeholder="Registre evidências, tratativas ou informações adicionais"></textarea>
+
+            <div class="escalonamento-ajuda">
+                <strong>Escalonamento:</strong>
+                <span><b>Nível 1</b> responsável direto</span>
+                <span><b>Nível 2</b> liderança da área, quando houver atraso ou bloqueio</span>
+                <span><b>Nível 3</b> gestão da qualidade, para criticidade alta ou recorrência</span>
+            </div>
+
+
+            <div class="botoes">
+
+                <button
+                    class="btn perigo"
+                    id="salvarNC">
+
+                    Salvar NC
+
+                </button>
+
+
+                <button
+                    class="btn secundario"
+                    id="fecharModal">
+
+                    Cancelar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

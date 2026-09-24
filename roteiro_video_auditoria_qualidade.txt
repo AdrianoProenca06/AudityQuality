@@ -1,0 +1,65 @@
+ROTEIRO DO VÍDEO - AUDITQUALITY
+Trabalho de Qualidade de Software - PUCPR
+DURAÇÃO TOTAL: até 3 minutos (180s)
+Todas as telas do site são apresentadas: Representantes de Qualidade,
+Dashboard, Nova Auditoria, Não Conformidades e Comunicação.
+
+--------------------------------------------------
+ADRIANO (0:00 - 0:30) — Abertura, tecnologia e equipe
+--------------------------------------------------
+"Olá! Somos o grupo da AuditQuality e vamos apresentar a ferramenta que
+desenvolvemos para automatizar a auditoria de qualidade de artefatos de
+processo. Todo o sistema foi construído do zero, em HTML, CSS e JavaScript
+puro, sem frameworks, sem Excel e sem nenhuma ferramenta pronta de mercado.
+Aqui na tela inicial temos os Representantes de Qualidade: eu, o Bernardo,
+o Matheus e o João, responsáveis pela auditoria, e também o link do
+repositório do projeto no GitHub, onde está todo o código-fonte."
+
+--------------------------------------------------
+BERNARDO (0:30 - 1:00) — Dashboard e Nova Auditoria
+--------------------------------------------------
+"No Dashboard, acompanhamos em tempo real o percentual de aderência da
+última auditoria, o total de itens conformes, e quantas não conformidades
+estão abertas ou já resolvidas. Já na tela de Nova Auditoria, informamos o
+artefato avaliado, podemos anexar o arquivo de evidência, o nome do auditor
+e a data. Em seguida, respondemos um checklist de 10 perguntas, marcando
+cada item como Conforme, Não Conforme ou Não Aplicável, e a ferramenta
+calcula automaticamente o percentual de aderência, sem nenhuma fórmula
+manual."
+
+--------------------------------------------------
+MATHEUS (1:00 - 1:35) — Não Conformidades e escalonamento
+--------------------------------------------------
+"Quando um item é marcado como Não Conforme, o sistema gera automaticamente
+um registro de não conformidade, com ID, descrição, responsável e prazo, e
+também é possível registrar uma NC manualmente. Na tela de Não
+conformidades, registramos também a classificação, data de identificação,
+ação corretiva e observações. Acompanhamos cada uma até a resolução,
+passando pelos status Aberta, Em Tratamento, Aguardando Verificação e
+Resolvida, com data de resolução registrada automaticamente. Se o prazo
+vencer, a ferramenta alerta visualmente que é hora de escalar. O botão
+Escalar avança a NC pelos níveis 1, 2 e 3: responsável direto, liderança da
+área e gestão da qualidade, garantindo que nenhum problema fique esquecido."
+
+--------------------------------------------------
+JOÃO (1:35 - 2:10) — Comunicação e exportação em PDF
+--------------------------------------------------
+"Na aba de Comunicação, basta selecionar a NC desejada e o sistema já monta
+automaticamente a mensagem, com descrição, responsável, prazo e nível de
+escalonamento, pronta para ser enviada por e-mail ao responsável. Também é
+possível exportar o relatório completo da auditoria em PDF, com o
+percentual de aderência e o resumo de todas as respostas do checklist,
+facilitando a documentação e a apresentação para a equipe e para a
+liderança."
+
+--------------------------------------------------
+Adriano (2:10 - 2:45) — Encerramento
+--------------------------------------------------
+"Com essa ferramenta, feita inteiramente em HTML, CSS e JavaScript por
+nós, conseguimos padronizar a auditoria, reduzir falhas, melhorar o
+controle das ações corretivas e dar rastreabilidade completa ao processo,
+desde o checklist até a resolução da não conformidade. Um projeto simples,
+funcional, visual e feito sem depender de Excel ou de qualquer ferramenta
+pronta."
+"Obrigado!"
+
