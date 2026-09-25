@@ -154,6 +154,10 @@ body {
     display: none;
 }
 
+
+    .adicionar-item {
+        display: grid;
+    }
 .page.active {
 
     display: block;
@@ -422,6 +426,30 @@ textarea {
     font-weight: bold;
 }
 
+.checklist-controles {
+    display: grid;
+    gap: 8px;
+    margin: 18px 0;
+    padding: 14px;
+    border: 1px dashed var(--dourado);
+    border-radius: 8px;
+    background: #fffaf1;
+}
+
+.adicionar-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.adicionar-item input {
+    margin-bottom: 0;
+}
+
+.checklist-controles small {
+    color: var(--texto-suave);
+}
+
 
 /* =========================
    CHECKLIST
@@ -443,6 +471,16 @@ textarea {
     font-weight: bold;
 
     margin-bottom: 10px;
+}
+
+.remover-item {
+    float: right;
+    border: 0;
+    background: transparent;
+    color: var(--vinho);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .opcoes {

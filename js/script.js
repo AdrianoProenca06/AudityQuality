@@ -8,7 +8,7 @@
    CHECKLIST
 ===================================================== */
 
-const itensChecklist = [
+const itensChecklistIniciais = [
 
     "O artefato foi identificado corretamente e está disponível para auditoria?",
 
@@ -31,6 +31,10 @@ const itensChecklist = [
     "O artefato está pronto para aprovação, armazenamento ou uso posterior?"
 
 ];
+
+let itensChecklist =
+    JSON.parse(localStorage.getItem("auditflow_itensChecklist")) ||
+    [...itensChecklistIniciais];
 
 
 /* =====================================================
@@ -158,38 +162,17 @@ function escaparHTML(valor) {
                     ? nivelSalvo
                     : new Array(itensChecklist.length).fill(null);
 
-            if (
-                respostas.length !== itensChecklist.length
-            ) {
-                respostas =
-                    new Array(
-                        itensChecklist.length
-                    ).fill(null);
-            }
-
-            if (
-                prazosChecklist.length !== itensChecklist.length
-            ) {
-                prazosChecklist =
-                    new Array(
-                        itensChecklist.length
-                    ).fill(null);
-            }
-
-            if (
-                nivelNC.length !== itensChecklist.length
-            ) {
-                nivelNC =
-                    new Array(
-                        itensChecklist.length
-                    ).fill(null);
-            }
+            respostas = normalizarLista(respostas);
+            prazosChecklist = normalizarLista(prazosChecklist);
+            nivelNC = normalizarLista(nivelNC);
 
             criarChecklist();
 
             configurarMenu();
 
             configurarBotoes();
+
+            configurarItensChecklist();
 
             configurarAnexoArquivo();
 
@@ -426,7 +409,11 @@ function criarChecklist() {
                 <div class="check-titulo">
 
                     ${indice + 1}.
-                    ${item}
+                    ${escaparHTML(item)}
+
+                    ${indice >= itensChecklistIniciais.length
+                        ? `<button type="button" class="remover-item" data-indice="${indice}" title="Remover item personalizado">Remover</button>`
+                        : ""}
 
                 </div>
 
@@ -542,6 +529,74 @@ function criarChecklist() {
 /* =====================================================
    OPÇÕES DO CHECKLIST
 ===================================================== */
+
+function normalizarLista(lista) {
+    const valores = Array.isArray(lista) ? lista.slice(0, itensChecklist.length) : [];
+    return valores.concat(new Array(itensChecklist.length - valores.length).fill(null));
+}
+
+function salvarItensChecklist() {
+    localStorage.setItem("auditflow_itensChecklist", JSON.stringify(itensChecklist));
+}
+
+function configurarItensChecklist() {
+    const campo = document.getElementById("novoItemChecklist");
+    const botao = document.getElementById("adicionarItemChecklist");
+
+    botao.addEventListener("click", adicionarItemChecklist);
+    campo.addEventListener("keydown", function (evento) {
+        if (evento.key === "Enter") {
+            evento.preventDefault();
+            adicionarItemChecklist();
+        }
+    });
+
+    document.getElementById("checklist").addEventListener("click", function (evento) {
+        const botaoRemover = evento.target.closest(".remover-item");
+        if (!botaoRemover) {
+            return;
+        }
+
+        const indice = Number(botaoRemover.dataset.indice);
+        itensChecklist.splice(indice, 1);
+        respostas.splice(indice, 1);
+        prazosChecklist.splice(indice, 1);
+        nivelNC.splice(indice, 1);
+        salvarItensChecklist();
+        salvarRespostas();
+        criarChecklist();
+        calcularAderencia();
+    });
+}
+
+function adicionarItemChecklist() {
+    const campo = document.getElementById("novoItemChecklist");
+    const item = campo.value.trim();
+
+    if (!item) {
+        alert("Digite o texto do novo item.");
+        campo.focus();
+        return;
+    }
+
+    if (itensChecklist.some(function (existente) {
+        return existente.toLowerCase() === item.toLowerCase();
+    })) {
+        alert("Esse item já existe no checklist.");
+        campo.focus();
+        return;
+    }
+
+    itensChecklist.push(item);
+    respostas.push(null);
+    prazosChecklist.push(null);
+    nivelNC.push(null);
+    salvarItensChecklist();
+    salvarRespostas();
+    campo.value = "";
+    criarChecklist();
+    calcularAderencia();
+}
 
 function configurarPrazosChecklist() {
 
@@ -863,16 +918,6 @@ function configurarBotoes() {
         .addEventListener(
             "click",
             limparChecklist
-        );
-
-
-    document
-        .getElementById(
-            "exportarPdf"
-        )
-        .addEventListener(
-            "click",
-            exportarPdf
         );
 
 
@@ -2370,7 +2415,7 @@ function reiniciarAuditoria() {
 
     const confirmar =
         window.confirm(
-            "Deseja limpar o checklist e remover a última auditoria salva?"
+            "Deseja limpar o checklist, remover a última auditoria salva e apagar as não conformidades registradas?"
         );
 
     if (!confirmar) {
@@ -2392,6 +2437,8 @@ function reiniciarAuditoria() {
             itensChecklist.length
         ).fill(null);
 
+    naoConformidades = [];
+
     auditoria = null;
 
     arquivoArtefato = null;
@@ -2412,139 +2459,18 @@ function reiniciarAuditoria() {
         "auditflow_nivelNC"
     );
 
+    salvarNCs();
+
     salvarRespostas();
 
     criarChecklist();
     configurarAnexoArquivo();
     calcularAderencia();
+    atualizarNCs();
     atualizarDashboard();
 
     alert(
         "Dados da auditoria reiniciados."
-    );
-
-}
-
-
-function exportarPdf() {
-
-    const resultado =
-        calcularAderencia();
-
-    const processo =
-        document
-            .getElementById("processo")
-            .value || "Artefato não informado";
-
-    const auditor =
-        document
-            .getElementById("auditor")
-            .value || "Não informado";
-
-    const data =
-        document
-            .getElementById("dataAuditoria")
-            .value || new Date().toISOString().split("T")[0];
-
-    const ncsPendentes =
-        naoConformidades.filter(
-            function (nc) {
-
-                return nc.status !== "Resolvida";
-
-            }
-        ).length;
-
-    const html = `
-        <!DOCTYPE html>
-        <html lang="pt-BR">
-        <head>
-            <meta charset="UTF-8">
-            <title>Relatório de Auditoria</title>
-            <style>
-                body { font-family: Arial, sans-serif; padding: 30px; color: #2d2d2d; }
-                h1 { color: #74142c; }
-                .box { border: 1px solid #e7dfe2; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
-                .linha { margin: 8px 0; }
-                .badge { display: inline-block; background: #f8e9ed; color: #74142c; padding: 6px 10px; border-radius: 999px; font-weight: bold; }
-                table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-                th, td { border: 1px solid #e7dfe2; padding: 8px; text-align: left; }
-                th { background: #fcf3f5; }
-            </style>
-        </head>
-        <body>
-            <h1>Relatório de Auditoria</h1>
-            <div class="box">
-                <div class="linha"><strong>Processo:</strong> ${processo}</div>
-                <div class="linha"><strong>Auditor:</strong> ${auditor}</div>
-                <div class="linha"><strong>Data:</strong> ${formatarData(data)}</div>
-                <div class="linha"><strong>Arquivo anexado:</strong> ${arquivoArtefato || "Nenhum arquivo anexado"}</div>
-                <div class="linha"><strong>Aderência:</strong> <span class="badge">${resultado.percentual.toFixed(1)}%</span></div>
-                <div class="linha"><strong>Conformes:</strong> ${resultado.conformes} / ${resultado.aplicaveis} aplicáveis</div>
-                <div class="linha"><strong>NCs pendentes:</strong> ${ncsPendentes}</div>
-            </div>
-            <div class="box">
-                <h3>Resumo do Checklist</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Pergunta</th>
-                            <th>Resposta</th>
-                            <th>Prazo de Resolução</th>
-                            <th>Nível</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${itensChecklist.map(function (item, indice) {
-                            const valor = respostas[indice] || "não avaliado";
-                            const legenda = {
-                                conforme: "Conforme",
-                                nc: "Não Conforme",
-                                na: "N/A"
-                            };
-                            const prazo = valor === "nc" ? formatarData(prazosChecklist[indice]) : "-";
-                            const nivel = valor === "nc" ? rotuloClassificacao(nivelNC[indice] || "baixa") : "-";
-                            return `
-                                <tr>
-                                    <td>${indice + 1}</td>
-                                    <td>${item}</td>
-                                    <td>${legenda[valor] || "Não avaliado"}</td>
-                                    <td>${prazo}</td>
-                                    <td>${nivel}</td>
-                                </tr>
-                            `;
-                        }).join("")}
-                    </tbody>
-                </table>
-            </div>
-        </body>
-        </html>
-    `;
-
-    const janela =
-        window.open(
-            "",
-            "_blank",
-            "width=900,height=700"
-        );
-
-    if (!janela) {
-        alert(
-            "O navegador bloqueou a janela de impressão. Permita pop-ups e tente novamente."
-        );
-        return;
-    }
-
-    janela.document.write(html);
-    janela.document.close();
-    janela.focus();
-
-    setTimeout(
-        function () {
-            janela.print();
-        },
-        500
     );
 
 }

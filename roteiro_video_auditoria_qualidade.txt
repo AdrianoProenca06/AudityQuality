@@ -1,65 +1,123 @@
-ROTEIRO DO VÍDEO - AUDITQUALITY
-Trabalho de Qualidade de Software - PUCPR
-DURAÇÃO TOTAL: até 3 minutos (180s)
-Todas as telas do site são apresentadas: Representantes de Qualidade,
-Dashboard, Nova Auditoria, Não Conformidades e Comunicação.
+# ROTEIRO DO VÍDEO — AUDITQUALITY
 
---------------------------------------------------
-ADRIANO (0:00 - 0:30) — Abertura, tecnologia e equipe
---------------------------------------------------
-"Olá! Somos o grupo da AuditQuality e vamos apresentar a ferramenta que
-desenvolvemos para automatizar a auditoria de qualidade de artefatos de
-processo. Todo o sistema foi construído do zero, em HTML, CSS e JavaScript
-puro, sem frameworks, sem Excel e sem nenhuma ferramenta pronta de mercado.
-Aqui na tela inicial temos os Representantes de Qualidade: eu, o Bernardo,
-o Matheus e o João, responsáveis pela auditoria, e também o link do
-repositório do projeto no GitHub, onde está todo o código-fonte."
+**Trabalho de Qualidade de Software — PUCPR**
+**Duração máxima: aproximadamente 3 minutos**
 
---------------------------------------------------
-BERNARDO (0:30 - 1:00) — Dashboard e Nova Auditoria
---------------------------------------------------
-"No Dashboard, acompanhamos em tempo real o percentual de aderência da
-última auditoria, o total de itens conformes, e quantas não conformidades
-estão abertas ou já resolvidas. Já na tela de Nova Auditoria, informamos o
-artefato avaliado, podemos anexar o arquivo de evidência, o nome do auditor
-e a data. Em seguida, respondemos um checklist de 10 perguntas, marcando
-cada item como Conforme, Não Conforme ou Não Aplicável, e a ferramenta
-calcula automaticamente o percentual de aderência, sem nenhuma fórmula
-manual."
+**Integrantes:** Adriano, Bernardo, Matheus e João
+**Artefato:** Certificado da empresa — `CeritficadoEmpresa.pdf`
 
---------------------------------------------------
-MATHEUS (1:00 - 1:35) — Não Conformidades e escalonamento
---------------------------------------------------
-"Quando um item é marcado como Não Conforme, o sistema gera automaticamente
-um registro de não conformidade, com ID, descrição, responsável e prazo, e
-também é possível registrar uma NC manualmente. Na tela de Não
-conformidades, registramos também a classificação, data de identificação,
-ação corretiva e observações. Acompanhamos cada uma até a resolução,
-passando pelos status Aberta, Em Tratamento, Aguardando Verificação e
-Resolvida, com data de resolução registrada automaticamente. Se o prazo
-vencer, a ferramenta alerta visualmente que é hora de escalar. O botão
-Escalar avança a NC pelos níveis 1, 2 e 3: responsável direto, liderança da
-área e gestão da qualidade, garantindo que nenhum problema fique esquecido."
+---
 
---------------------------------------------------
-JOÃO (1:35 - 2:10) — Comunicação e exportação em PDF
---------------------------------------------------
-"Na aba de Comunicação, basta selecionar a NC desejada e o sistema já monta
-automaticamente a mensagem, com descrição, responsável, prazo e nível de
-escalonamento, pronta para ser enviada por e-mail ao responsável. Também é
-possível exportar o relatório completo da auditoria em PDF, com o
-percentual de aderência e o resumo de todas as respostas do checklist,
-facilitando a documentação e a apresentação para a equipe e para a
-liderança."
+## ADRIANO — 0:00 a 0:45
 
---------------------------------------------------
-Adriano (2:10 - 2:45) — Encerramento
---------------------------------------------------
-"Com essa ferramenta, feita inteiramente em HTML, CSS e JavaScript por
-nós, conseguimos padronizar a auditoria, reduzir falhas, melhorar o
-controle das ações corretivas e dar rastreabilidade completa ao processo,
-desde o checklist até a resolução da não conformidade. Um projeto simples,
-funcional, visual e feito sem depender de Excel ou de qualquer ferramenta
-pronta."
-"Obrigado!"
+### Apresentação + Auditoria automatizada
 
+“Olá! Somos a equipe da AuditQuality.
+
+Nossa ferramenta foi desenvolvida para atender ao primeiro requisito do trabalho: realizar uma auditoria de qualidade de forma automatizada.
+
+Em vez de realizar o controle manualmente, nossa solução reúne em um único sistema todas as etapas da auditoria, desde o cadastro do artefato até o checklist, cálculo de aderência, registro das não conformidades, acompanhamento e comunicação.
+
+Para demonstrar a ferramenta, utilizaremos como artefato o certificado da empresa SoftwareONE, que foi anexado ao sistema.
+
+Na tela de Representantes de Qualidade, podemos visualizar os quatro integrantes da equipe: Adriano, Bernardo, Matheus e João.
+
+Na opção Nova Auditoria, cadastramos o nome do artefato, anexamos o certificado, informamos o responsável pela auditoria e registramos a data.
+
+Dessa forma, a auditoria fica identificada, organizada e pronta para ser executada dentro da própria ferramenta.”
+
+---
+
+## BERNARDO — 0:45 a 1:30
+
+### Checklist + cálculo do percentual de aderência
+
+“Agora vamos demonstrar o segundo requisito: a criação do checklist e o cálculo do percentual de aderência.
+
+Como estamos utilizando um certificado como artefato, nossa ferramenta apresenta itens específicos para verificar as informações do documento.
+
+Por exemplo, podemos verificar se o certificado está válido, se está legível, se apresenta a identificação da empresa, se possui as informações necessárias e se o documento está de acordo com os critérios definidos para a auditoria.
+
+Para cada item, o auditor pode selecionar Conforme, Não Conforme ou N/A.
+
+Também existe o botão Adicionar item, que permite incluir uma verificação específica durante a auditoria.
+
+Conforme respondemos ao checklist, o sistema atualiza automaticamente a barra de progresso e calcula o percentual de aderência, considerando somente os itens que são aplicáveis.
+
+Depois de concluir as verificações, utilizamos o botão Finalizar Auditoria para salvar o resultado.
+
+Os itens marcados como Não Conforme também podem gerar automaticamente uma não conformidade.
+
+O botão Limpar permite apagar as respostas do checklist, enquanto a opção Reiniciar permite preparar uma nova avaliação.
+
+No Dashboard, conseguimos visualizar o percentual de aderência e a quantidade de itens conformes e não conformes.”
+
+---
+
+## MATHEUS — 1:30 a 2:20
+
+### Não conformidade + acompanhamento + resolução + escalonamento
+
+“Agora vamos demonstrar o terceiro requisito: registrar e acompanhar uma não conformidade até sua resolução, incluindo o processo de escalonamento.
+
+Quando um item do checklist é marcado como Não Conforme, a ferramenta pode gerar automaticamente uma NC, com informações como ID, descrição, responsável, prazo e classificação.
+
+Também é possível registrar uma ocorrência manualmente pelo botão Registrar NC.
+
+Para nossa demonstração, vamos simular uma não conformidade relacionada ao artefato. Por exemplo: identificar a necessidade de atualização ou comprovação de uma documentação interna relacionada ao certificado.
+
+No formulário, registramos a descrição da ocorrência, o responsável, o prazo para tratamento, a classificação, a data de identificação, a ação corretiva e as observações.
+
+Depois que a NC é registrada, conseguimos acompanhar todo o seu ciclo dentro da tabela.
+
+Ela pode passar pelos status Aberta, Em tratamento, Aguardando verificação e, finalmente, Resolvida.
+
+Quando a NC é marcada como Resolvida, o sistema registra também a data da resolução.
+
+Se o prazo definido for ultrapassado, o sistema apresenta um alerta para indicar que existe uma pendência que precisa de atenção.
+
+Além disso, temos o processo de escalonamento. A ocorrência pode começar no Nível 1, com o responsável direto, passar para o Nível 2, envolvendo a liderança da área, e chegar ao Nível 3, envolvendo a gestão da qualidade.
+
+Assim, a ferramenta permite registrar, acompanhar, tratar, verificar e resolver uma não conformidade.”
+
+---
+
+## JOÃO — 2:20 a 3:00
+
+### Comunicação + tecnologia + conclusão
+
+“Por fim, vamos demonstrar o quarto requisito: a comunicação da não conformidade.
+
+Na aba Comunicação, selecionamos uma NC e informamos o e-mail do destinatário.
+
+A ferramenta utiliza as informações registradas na ocorrência para montar a comunicação, incluindo a descrição da NC, o responsável, o prazo, o status, a ação corretiva e o nível de escalonamento.
+
+Ao clicar em Enviar por e-mail, a comunicação é aberta pronta para o envio ao responsável.
+
+Dessa forma, além de registrar a não conformidade, conseguimos comunicar a ocorrência e acompanhar seu tratamento.
+
+O Dashboard também permite visualizar informações gerais da auditoria, como a quantidade de NCs abertas e resolvidas e o percentual de aderência.
+
+A AuditQuality foi desenvolvida pela própria equipe utilizando HTML, CSS e JavaScript, sem utilizar Excel e sem utilizar uma ferramenta pronta específica para auditoria.
+
+Portanto, nossa solução demonstra todos os requisitos propostos: auditoria automatizada, checklist, cálculo de percentual de aderência, registro e acompanhamento de não conformidades, resolução, escalonamento e comunicação.
+
+Obrigado!”
+
+Checklist dos requisitos no vídeo
+Requisito do trabalho	Quem demonstra
+Auditoria de qualidade automatizada	Adriano
+Cadastro da auditoria e artefato	Adriano
+Checklist	Bernardo
+Itens Conforme / Não Conforme / N/A	Bernardo
+Cálculo de % de aderência	Bernardo
+Registro de não conformidade	Matheus
+Acompanhamento da NC	Matheus
+Tratamento até resolução	Matheus
+Escalonamento Nível 1 → 2 → 3	Matheus
+Comunicação da NC	João
+Dashboard	João
+Sem Excel	João
+Ferramenta desenvolvida pela equipe	João
+Todos aparecem e falam	Os quatro
+Artefato real usado na demonstração	Certificado
