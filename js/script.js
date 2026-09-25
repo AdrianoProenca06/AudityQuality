@@ -1,5 +1,5 @@
 /* =====================================================
-   AUDITFLOW
+    AUDITQUALITY
    Sistema de Auditoria de Qualidade
 ===================================================== */
 
@@ -33,7 +33,7 @@ const itensChecklistIniciais = [
 ];
 
 let itensChecklist =
-    JSON.parse(localStorage.getItem("auditflow_itensChecklist")) ||
+    JSON.parse(localStorage.getItem("auditquality_itensChecklist")) ||
     [...itensChecklistIniciais];
 
 
@@ -43,33 +43,37 @@ let itensChecklist =
 
 let respostas =
     JSON.parse(
-        localStorage.getItem("auditflow_respostas")
+        localStorage.getItem("auditquality_respostas")
     ) ||
     new Array(itensChecklist.length).fill(null);
 
 let prazosChecklist =
     JSON.parse(
-        localStorage.getItem("auditflow_prazos")
+        localStorage.getItem("auditquality_prazos")
     ) ||
     new Array(itensChecklist.length).fill(null);
 
 let naoConformidades =
     JSON.parse(
-        localStorage.getItem("auditflow_ncs")
+        localStorage.getItem("auditquality_ncs")
     ) || [];
 
 let auditoria =
     JSON.parse(
-        localStorage.getItem("auditflow_auditoria")
+        localStorage.getItem("auditquality_auditoria")
     ) || null;
 
 let arquivoArtefato =
-    localStorage.getItem("auditflow_arquivo") ||
+    localStorage.getItem("auditquality_arquivo") ||
+    null;
+
+let arquivoReferencia =
+    localStorage.getItem("auditquality_arquivoReferencia") ||
     null;
 
 let nivelNC =
     JSON.parse(
-        localStorage.getItem("auditflow_nivelNC")
+        localStorage.getItem("auditquality_nivelNC")
     ) ||
     new Array(itensChecklist.length).fill(null);
 
@@ -134,17 +138,17 @@ function escaparHTML(valor) {
 
             const respostasSalvas =
                 JSON.parse(
-                    localStorage.getItem("auditflow_respostas")
+                    localStorage.getItem("auditquality_respostas")
                 );
 
             const prazosSalvos =
                 JSON.parse(
-                    localStorage.getItem("auditflow_prazos")
+                    localStorage.getItem("auditquality_prazos")
                 );
 
             const nivelSalvo =
                 JSON.parse(
-                    localStorage.getItem("auditflow_nivelNC")
+                    localStorage.getItem("auditquality_nivelNC")
                 );
 
             respostas =
@@ -175,6 +179,8 @@ function escaparHTML(valor) {
             configurarItensChecklist();
 
             configurarAnexoArquivo();
+
+            configurarAnexoReferencia();
 
             carregarData();
 
@@ -344,7 +350,7 @@ function configurarAnexoArquivo() {
                 );
 
                 localStorage.setItem(
-                    "auditflow_arquivo",
+                    "auditquality_arquivo",
                     arquivoArtefato
                 );
 
@@ -369,7 +375,7 @@ function configurarAnexoArquivo() {
             );
 
             localStorage.removeItem(
-                "auditflow_arquivo"
+                "auditquality_arquivo"
             );
 
         }
@@ -536,7 +542,7 @@ function normalizarLista(lista) {
 }
 
 function salvarItensChecklist() {
-    localStorage.setItem("auditflow_itensChecklist", JSON.stringify(itensChecklist));
+    localStorage.setItem("auditquality_itensChecklist", JSON.stringify(itensChecklist));
 }
 
 function configurarItensChecklist() {
@@ -1052,6 +1058,10 @@ function finalizarAuditoria() {
             arquivoArtefato ||
             "Nenhum arquivo anexado",
 
+        arquivoReferencia:
+            arquivoReferencia ||
+            "Nenhum arquivo anexado",
+
         conformes:
             resultado.conformes,
 
@@ -1066,7 +1076,7 @@ function finalizarAuditoria() {
 
     localStorage.setItem(
 
-        "auditflow_auditoria",
+        "auditquality_auditoria",
 
         JSON.stringify(auditoria)
 
@@ -1434,7 +1444,7 @@ function salvarNCs() {
 
     localStorage.setItem(
 
-        "auditflow_ncs",
+        "auditquality_ncs",
 
         JSON.stringify(
             naoConformidades
@@ -1449,7 +1459,7 @@ function salvarPrazosChecklist() {
 
     localStorage.setItem(
 
-        "auditflow_prazos",
+        "auditquality_prazos",
 
         JSON.stringify(
             prazosChecklist
@@ -1464,7 +1474,7 @@ function salvarNivelNC() {
 
     localStorage.setItem(
 
-        "auditflow_nivelNC",
+        "auditquality_nivelNC",
 
         JSON.stringify(
             nivelNC
@@ -1479,7 +1489,7 @@ function salvarRespostas() {
 
     localStorage.setItem(
 
-        "auditflow_respostas",
+        "auditquality_respostas",
 
         JSON.stringify(
             respostas
@@ -2443,20 +2453,26 @@ function reiniciarAuditoria() {
 
     arquivoArtefato = null;
 
+    arquivoReferencia = null;
+
     localStorage.removeItem(
-        "auditflow_auditoria"
+        "auditquality_auditoria"
     );
 
     localStorage.removeItem(
-        "auditflow_arquivo"
+        "auditquality_arquivo"
     );
 
     localStorage.removeItem(
-        "auditflow_prazos"
+        "auditquality_arquivoReferencia"
     );
 
     localStorage.removeItem(
-        "auditflow_nivelNC"
+        "auditquality_prazos"
+    );
+
+    localStorage.removeItem(
+        "auditquality_nivelNC"
     );
 
     salvarNCs();
@@ -2465,6 +2481,7 @@ function reiniciarAuditoria() {
 
     criarChecklist();
     configurarAnexoArquivo();
+    configurarAnexoReferencia();
     calcularAderencia();
     atualizarNCs();
     atualizarDashboard();
@@ -2509,4 +2526,36 @@ function limparCamposNC() {
     document.getElementById("ncAcaoCorretiva").value = "";
     document.getElementById("ncObservacoes").value = "";
 
+}
+
+function configurarAnexoReferencia() {
+
+    const input = document.getElementById("arquivoReferencia");
+    const info = document.getElementById("arquivoReferenciaInfo");
+    const nomeSpan = document.getElementById("arquivoReferenciaNome");
+    const btnRemover = document.getElementById("removerArquivoReferencia");
+
+    if (arquivoReferencia) {
+        nomeSpan.textContent = "📎 " + arquivoReferencia;
+        info.classList.add("mostrar");
+    } else {
+        info.classList.remove("mostrar");
+    }
+
+    input.addEventListener("change", function () {
+        if (input.files && input.files.length > 0) {
+            arquivoReferencia = input.files[0].name;
+            nomeSpan.textContent = "📎 " + arquivoReferencia;
+            info.classList.add("mostrar");
+            localStorage.setItem("auditquality_arquivoReferencia", arquivoReferencia);
+        }
+    });
+
+    btnRemover.addEventListener("click", function () {
+        arquivoReferencia = null;
+        input.value = "";
+        nomeSpan.textContent = "";
+        info.classList.remove("mostrar");
+        localStorage.removeItem("auditquality_arquivoReferencia");
+    });
 }

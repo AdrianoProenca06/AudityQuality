@@ -4,7 +4,8 @@
 **Duração máxima: aproximadamente 3 minutos**
 
 **Integrantes:** Adriano, Bernardo, Matheus e João
-**Artefato:** Certificado da empresa — `CeritficadoEmpresa.pdf`
+**Projeto:** Design de Software — PUCPR
+**Artefato:** Diagrama de Componentes do sistema HealthCore
 
 ---
 
@@ -14,17 +15,15 @@
 
 “Olá! Somos a equipe da AuditQuality.
 
-Nossa ferramenta foi desenvolvida para atender ao primeiro requisito do trabalho: realizar uma auditoria de qualidade de forma automatizada.
+Nossa plataforma automatiza a auditoria e reúne cadastro do artefato, checklist, cálculo de aderência, acompanhamento de não conformidades e comunicação.
 
-Em vez de realizar o controle manualmente, nossa solução reúne em um único sistema todas as etapas da auditoria, desde o cadastro do artefato até o checklist, cálculo de aderência, registro das não conformidades, acompanhamento e comunicação.
-
-Para demonstrar a ferramenta, utilizaremos como artefato o certificado da empresa SoftwareONE, que foi anexado ao sistema.
+No projeto de Design de Software da PUCPR, vamos auditar o Diagrama de Componentes do HealthCore.
 
 Na tela de Representantes de Qualidade, podemos visualizar os quatro integrantes da equipe: Adriano, Bernardo, Matheus e João.
 
-Na opção Nova Auditoria, cadastramos o nome do artefato, anexamos o certificado, informamos o responsável pela auditoria e registramos a data.
+Em Nova Auditoria, cadastramos o artefato, anexamos o diagrama e seu Artefato de Referência da Auditoria, além de informar o auditor e a data.
 
-Dessa forma, a auditoria fica identificada, organizada e pronta para ser executada dentro da própria ferramenta.”
+Assim, a auditoria fica identificada e pronta para execução.”
 
 ---
 
@@ -32,25 +31,13 @@ Dessa forma, a auditoria fica identificada, organizada e pronta para ser executa
 
 ### Checklist + cálculo do percentual de aderência
 
-“Agora vamos demonstrar o segundo requisito: a criação do checklist e o cálculo do percentual de aderência.
+“No checklist, avaliamos se os componentes estão identificados, representados corretamente e consistentes com a documentação. As Figuras 3 e 6 apresentam a divergência que veremos na NC.
 
-Como estamos utilizando um certificado como artefato, nossa ferramenta apresenta itens específicos para verificar as informações do documento.
+Em cada item, selecionamos Conforme, Não Conforme ou N/A; Adicionar item permite incluir verificações específicas.
 
-Por exemplo, podemos verificar se o certificado está válido, se está legível, se apresenta a identificação da empresa, se possui as informações necessárias e se o documento está de acordo com os critérios definidos para a auditoria.
+O sistema atualiza o progresso e calcula a aderência considerando apenas os itens aplicáveis. Em Finalizar Auditoria, salvamos o resultado; itens Não Conformes também podem gerar NCs automaticamente.
 
-Para cada item, o auditor pode selecionar Conforme, Não Conforme ou N/A.
-
-Também existe o botão Adicionar item, que permite incluir uma verificação específica durante a auditoria.
-
-Conforme respondemos ao checklist, o sistema atualiza automaticamente a barra de progresso e calcula o percentual de aderência, considerando somente os itens que são aplicáveis.
-
-Depois de concluir as verificações, utilizamos o botão Finalizar Auditoria para salvar o resultado.
-
-Os itens marcados como Não Conforme também podem gerar automaticamente uma não conformidade.
-
-O botão Limpar permite apagar as respostas do checklist, enquanto a opção Reiniciar permite preparar uma nova avaliação.
-
-No Dashboard, conseguimos visualizar o percentual de aderência e a quantidade de itens conformes e não conformes.”
+Limpar apaga as respostas, Reiniciar prepara outra avaliação e o Dashboard mostra a aderência e os itens conformes e não conformes.”
 
 ---
 
@@ -58,27 +45,15 @@ No Dashboard, conseguimos visualizar o percentual de aderência e a quantidade d
 
 ### Não conformidade + acompanhamento + resolução + escalonamento
 
-“Agora vamos demonstrar o terceiro requisito: registrar e acompanhar uma não conformidade até sua resolução, incluindo o processo de escalonamento.
+“A NC real é: Nas Figuras 3 (Pacote Clínico) e 6 (Pacote Farmácia) do diagrama HealthCore, os componentes PrescricaoMedica, AssinaturaMedicaDigital, DistribuicaoMedicamentos e GestaoLeitos aparecem sem o estereótipo `<<component>>` visível, apesar de estarem classificados como «component» na tabela descritiva. Isso representa uma divergência entre o diagrama e a documentação textual, violando o item 8 do checklist: ausência de divergências, erros ou inconsistências relevantes no conteúdo.
 
-Quando um item do checklist é marcado como Não Conforme, a ferramenta pode gerar automaticamente uma NC, com informações como ID, descrição, responsável, prazo e classificação.
+No formulário, registramos responsável, prazo, classificação, data, ação corretiva e observações. A NC pode ser criada pelo checklist ou pelo botão Registrar NC.
 
-Também é possível registrar uma ocorrência manualmente pelo botão Registrar NC.
+Na tabela, acompanhamos os status Aberta, Em tratamento, Aguardando verificação e Resolvida. A ferramenta registra a data da resolução e alerta sobre prazos vencidos.
 
-Para nossa demonstração, vamos simular uma não conformidade relacionada ao artefato. Por exemplo: identificar a necessidade de atualização ou comprovação de uma documentação interna relacionada ao certificado.
+Se necessário, escalonamos do Nível 1, responsável direto, ao Nível 2, liderança, e ao Nível 3, gestão da qualidade.
 
-No formulário, registramos a descrição da ocorrência, o responsável, o prazo para tratamento, a classificação, a data de identificação, a ação corretiva e as observações.
-
-Depois que a NC é registrada, conseguimos acompanhar todo o seu ciclo dentro da tabela.
-
-Ela pode passar pelos status Aberta, Em tratamento, Aguardando verificação e, finalmente, Resolvida.
-
-Quando a NC é marcada como Resolvida, o sistema registra também a data da resolução.
-
-Se o prazo definido for ultrapassado, o sistema apresenta um alerta para indicar que existe uma pendência que precisa de atenção.
-
-Além disso, temos o processo de escalonamento. A ocorrência pode começar no Nível 1, com o responsável direto, passar para o Nível 2, envolvendo a liderança da área, e chegar ao Nível 3, envolvendo a gestão da qualidade.
-
-Assim, a ferramenta permite registrar, acompanhar, tratar, verificar e resolver uma não conformidade.”
+Assim, acompanhamos a NC até sua resolução.”
 
 ---
 
@@ -86,38 +61,31 @@ Assim, a ferramenta permite registrar, acompanhar, tratar, verificar e resolver 
 
 ### Comunicação + tecnologia + conclusão
 
-“Por fim, vamos demonstrar o quarto requisito: a comunicação da não conformidade.
+“Na aba Comunicação, selecionamos a NC e informamos o e-mail do destinatário. A mensagem reúne descrição, responsável, prazo, status, ação corretiva e nível de escalonamento.
 
-Na aba Comunicação, selecionamos uma NC e informamos o e-mail do destinatário.
+Em Enviar por e-mail, ela é aberta pronta para envio.
 
-A ferramenta utiliza as informações registradas na ocorrência para montar a comunicação, incluindo a descrição da NC, o responsável, o prazo, o status, a ação corretiva e o nível de escalonamento.
+O Dashboard também reúne aderência e NCs abertas e resolvidas.
 
-Ao clicar em Enviar por e-mail, a comunicação é aberta pronta para o envio ao responsável.
+Desenvolvemos a AuditQuality em HTML, CSS e JavaScript, sem Excel ou ferramenta pronta específica para auditoria.
 
-Dessa forma, além de registrar a não conformidade, conseguimos comunicar a ocorrência e acompanhar seu tratamento.
-
-O Dashboard também permite visualizar informações gerais da auditoria, como a quantidade de NCs abertas e resolvidas e o percentual de aderência.
-
-A AuditQuality foi desenvolvida pela própria equipe utilizando HTML, CSS e JavaScript, sem utilizar Excel e sem utilizar uma ferramenta pronta específica para auditoria.
-
-Portanto, nossa solução demonstra todos os requisitos propostos: auditoria automatizada, checklist, cálculo de percentual de aderência, registro e acompanhamento de não conformidades, resolução, escalonamento e comunicação.
-
-Obrigado!”
+Com isso, demonstramos auditoria automatizada, checklist, aderência, registro, resolução, escalonamento e comunicação de NCs. Obrigado!”
 
 Checklist dos requisitos no vídeo
-Requisito do trabalho	Quem demonstra
-Auditoria de qualidade automatizada	Adriano
-Cadastro da auditoria e artefato	Adriano
-Checklist	Bernardo
-Itens Conforme / Não Conforme / N/A	Bernardo
-Cálculo de % de aderência	Bernardo
-Registro de não conformidade	Matheus
-Acompanhamento da NC	Matheus
-Tratamento até resolução	Matheus
-Escalonamento Nível 1 → 2 → 3	Matheus
-Comunicação da NC	João
-Dashboard	João
-Sem Excel	João
-Ferramenta desenvolvida pela equipe	João
-Todos aparecem e falam	Os quatro
-Artefato real usado na demonstração	Certificado
+| Requisito do trabalho | Quem demonstra |
+|---|---|
+| Auditoria de qualidade automatizada | Adriano |
+| Cadastro da auditoria e artefato | Adriano |
+| Checklist | Bernardo |
+| Itens Conforme / Não Conforme / N/A | Bernardo |
+| Cálculo de percentual de aderência | Bernardo |
+| Registro de não conformidade | Matheus |
+| Acompanhamento da NC | Matheus |
+| Tratamento até resolução | Matheus |
+| Escalonamento Nível 1 → 2 → 3 | Matheus |
+| Comunicação da NC | João |
+| Dashboard | João |
+| Sem Excel | João |
+| Ferramenta desenvolvida pela equipe | João |
+| Todos aparecem e falam | Os quatro |
+| Artefato real usado na demonstração | Diagrama de Componentes (HealthCore) |

@@ -12,7 +12,6 @@
 
 <body>
 
-    <!-- CABEÇALHO -->
     <header class="header">
         <div class="logo">
             <img src="img/logoPuc.jpg" alt="Logo PUCPR" class="logo-imagem">
@@ -24,7 +23,6 @@
     </header>
 
 
-    <!-- MENU -->
     <nav class="menu">
 
         <button class="menu-btn" data-page="representantesQualidade">
@@ -53,9 +51,6 @@
     <main class="container">
 
 
-        <!-- ========================= -->
-        <!-- REPRESENTANTES DE QUALIDADE -->
-        <!-- ========================= -->
 
         <section id="representantesQualidade" class="page">
 
@@ -118,9 +113,6 @@
         </section>
 
 
-        <!-- ========================= -->
-        <!-- DASHBOARD -->
-        <!-- ========================= -->
 
 
         <section id="dashboard" class="page active">
@@ -184,9 +176,6 @@
 
 
 
-        <!-- ========================= -->
-        <!-- NOVA AUDITORIA -->
-        <!-- ========================= -->
 
         <section id="auditoria" class="page">
 
@@ -206,6 +195,31 @@
                             type="text"
                             id="processo"
                             placeholder="Ex.: PDF, checklist, processo, documento, evidência, etc.">
+                    </div>
+
+                    <div>
+                        <label>Artefato de Referência da Auditoria</label>
+
+                        <input
+                            type="file"
+                            id="arquivoReferencia">
+
+                        <div
+                            id="arquivoReferenciaInfo"
+                            class="arquivo-info">
+
+                            <span id="arquivoReferenciaNome"></span>
+
+                            <button
+                                type="button"
+                                class="btn-remover-arquivo"
+                                id="removerArquivoReferencia">
+
+                                Remover
+
+                            </button>
+
+                        </div>
                     </div>
 
 
@@ -287,7 +301,6 @@
                 <div id="checklist"></div>
 
 
-                <!-- RESULTADO -->
 
                 <div class="resultado">
 
@@ -348,9 +361,6 @@
 
 
 
-        <!-- ========================= -->
-        <!-- NÃO CONFORMIDADES -->
-        <!-- ========================= -->
 
         <section id="ncs" class="page">
 
@@ -417,9 +427,6 @@
 
 
 
-        <!-- ========================= -->
-        <!-- COMUNICAÇÃO -->
-        <!-- ========================= -->
 
         <section id="comunicacao" class="page">
 
@@ -484,9 +491,6 @@
 
 
 
-    <!-- ========================= -->
-    <!-- MODAL DE NC -->
-    <!-- ========================= -->
 
     <div
         id="modal"
@@ -598,7 +602,6 @@
 
 
 
-    <!-- JAVASCRIPT -->
 
     <script src="js/script.js"></script>
 
