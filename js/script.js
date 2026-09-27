@@ -1,13 +1,3 @@
-/* =====================================================
-    AUDITQUALITY
-   Sistema de Auditoria de Qualidade
-===================================================== */
-
-
-/* =====================================================
-   CHECKLIST
-===================================================== */
-
 const itensChecklistIniciais = [
 
     "O artefato foi identificado corretamente e está disponível para auditoria?",
@@ -36,10 +26,6 @@ let itensChecklist =
     JSON.parse(localStorage.getItem("auditquality_itensChecklist")) ||
     [...itensChecklistIniciais];
 
-
-/* =====================================================
-   VARIÁVEIS
-===================================================== */
 
 let respostas =
     JSON.parse(
@@ -128,10 +114,6 @@ function escaparHTML(valor) {
         .replace(/'/g, "&#039;");
 }
 
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
-
     document.addEventListener(
         "DOMContentLoaded",
         function () {
@@ -192,10 +174,6 @@ function escaparHTML(valor) {
     );
 
 
-/* =====================================================
-   MENU
-===================================================== */
-
 function configurarMenu() {
 
     const botoes =
@@ -211,11 +189,6 @@ function configurarMenu() {
                     botao.dataset.page;
 
 
-                /*
-                   Remove a classe active
-                   de todos os botões
-                */
-
                 botoes.forEach(function (b) {
 
                     b.classList.remove("active");
@@ -223,16 +196,8 @@ function configurarMenu() {
                 });
 
 
-                /*
-                   Ativa o botão clicado
-                */
-
                 botao.classList.add("active");
 
-
-                /*
-                   Esconde todas as páginas
-                */
 
                 document
                     .querySelectorAll(".page")
@@ -242,10 +207,6 @@ function configurarMenu() {
 
                     });
 
-
-                /*
-                   Mostra a página escolhida
-                */
 
                 document
                     .getElementById(pagina)
@@ -258,10 +219,6 @@ function configurarMenu() {
 
 }
 
-
-/* =====================================================
-   DATA AUTOMÁTICA
-===================================================== */
 
 function carregarData() {
 
@@ -279,10 +236,6 @@ function carregarData() {
 
 }
 
-
-/* =====================================================
-   ANEXO DO ARTEFATO
-===================================================== */
 
 function configurarAnexoArquivo() {
 
@@ -306,11 +259,6 @@ function configurarAnexoArquivo() {
             "removerArquivo"
         );
 
-
-    /*
-       Restaura o nome do arquivo
-       anexado anteriormente
-    */
 
     if (arquivoArtefato) {
 
@@ -383,10 +331,6 @@ function configurarAnexoArquivo() {
 
 }
 
-
-/* =====================================================
-   CRIA CHECKLIST
-===================================================== */
 
 function criarChecklist() {
 
@@ -531,10 +475,6 @@ function criarChecklist() {
 
 }
 
-
-/* =====================================================
-   OPÇÕES DO CHECKLIST
-===================================================== */
 
 function normalizarLista(lista) {
     const valores = Array.isArray(lista) ? lista.slice(0, itensChecklist.length) : [];
@@ -789,11 +729,6 @@ function configurarOpcoesChecklist() {
 
                 }
 
-                /*
-                   Remove seleção das
-                   outras opções
-                */
-
                 const grupo =
                     botao.parentElement;
 
@@ -807,10 +742,6 @@ function configurarOpcoesChecklist() {
 
                     });
 
-
-                /*
-                   Marca a opção escolhida
-                */
 
                 botao.classList.add(
                     "selecionado"
@@ -826,10 +757,6 @@ function configurarOpcoesChecklist() {
 
 }
 
-
-/* =====================================================
-   CALCULA ADERÊNCIA
-===================================================== */
 
 function calcularAderencia() {
 
@@ -899,10 +826,6 @@ function calcularAderencia() {
 
 }
 
-
-/* =====================================================
-   CONFIGURA BOTÕES
-===================================================== */
 
 function configurarBotoes() {
 
@@ -1006,10 +929,6 @@ function configurarBotoes() {
 }
 
 
-/* =====================================================
-   FINALIZA AUDITORIA
-===================================================== */
-
 function finalizarAuditoria() {
 
     const resultado =
@@ -1083,12 +1002,6 @@ function finalizarAuditoria() {
     );
 
 
-    /*
-       Cria NC automaticamente
-       para cada item marcado
-       como Não Conforme.
-    */
-
     respostas.forEach(
         function (resposta, indice) {
 
@@ -1126,21 +1039,12 @@ function finalizarAuditoria() {
 }
 
 
-/* =====================================================
-   CRIA NC AUTOMÁTICA
-===================================================== */
-
 function criarNCAutomatica(
     indice,
     auditor,
     data
 ) {
 
-
-    /*
-       Evita criar a mesma NC
-       várias vezes.
-    */
 
     const existe =
         naoConformidades.some(
@@ -1234,10 +1138,6 @@ function criarNCAutomatica(
 }
 
 
-/* =====================================================
-   GERA ID DA NC
-===================================================== */
-
 function gerarID() {
 
     const numero =
@@ -1256,10 +1156,6 @@ function gerarID() {
 }
 
 
-/* =====================================================
-   PRAZO PADRÃO
-===================================================== */
-
 function calcularPrazo(classificacao, inicio) {
     let data = inicio ? new Date(inicio) : new Date();
 
@@ -1272,10 +1168,6 @@ function calcularPrazo(classificacao, inicio) {
 
 }
 
-
-/* =====================================================
-   MODAL
-===================================================== */
 
 function abrirModal() {
 
@@ -1297,10 +1189,6 @@ function fecharModal() {
 
 }
 
-
-/* =====================================================
-   SALVAR NC MANUAL
-===================================================== */
 
 function salvarNC() {
 
@@ -1436,10 +1324,6 @@ function salvarNC() {
 }
 
 
-/* =====================================================
-   SALVA NO NAVEGADOR
-===================================================== */
-
 function salvarNCs() {
 
     localStorage.setItem(
@@ -1502,10 +1386,6 @@ function salvarRespostas() {
 
 }
 
-
-/* =====================================================
-   ATUALIZA TABELA DE NC
-===================================================== */
 
 function atualizarNCs() {
 
@@ -1751,10 +1631,6 @@ function atualizarNCs() {
 }
 
 
-/* =====================================================
-   ALTERAR STATUS
-===================================================== */
-
 function alterarStatus(
     indice,
     novoStatus
@@ -1789,10 +1665,6 @@ function alterarStatus(
 
 }
 
-
-/* =====================================================
-   ESCALONAR NC
-===================================================== */
 
 function escalarNC(indice) {
 
@@ -1844,10 +1716,6 @@ function escalarNC(indice) {
 }
 
 
-/* =====================================================
-   EXCLUIR NC
-===================================================== */
-
 function excluirNC(indice) {
 
     const nc =
@@ -1882,10 +1750,6 @@ function excluirNC(indice) {
 }
 
 
-/* =====================================================
-   VERIFICA PRAZO
-===================================================== */
-
 function verificarAtraso(nc) {
 
     if (
@@ -1912,10 +1776,6 @@ function verificarAtraso(nc) {
 
 }
 
-
-/* =====================================================
-   FORMATA DATA
-===================================================== */
 
 function formatarData(data) {
 
@@ -1950,10 +1810,6 @@ function formatarDataHora(data) {
 
 }
 
-
-/* =====================================================
-   ATUALIZA DASHBOARD
-===================================================== */
 
 function atualizarDashboard() {
 
@@ -2072,10 +1928,6 @@ function atualizarDashboard() {
 }
 
 
-/* =====================================================
-   NCs NO DASHBOARD
-===================================================== */
-
 function atualizarDashboardNCs() {
 
     const container =
@@ -2173,10 +2025,6 @@ function atualizarDashboardNCs() {
 }
 
 
-/* =====================================================
-   SELECT DE NC
-===================================================== */
-
 function atualizarSelectNC() {
 
     const select =
@@ -2225,10 +2073,6 @@ function atualizarSelectNC() {
 
 }
 
-
-/* =====================================================
-   GERA COMUNICAÇÃO
-===================================================== */
 
 function gerarMensagem() {
 
@@ -2304,10 +2148,6 @@ Após a correção, deverá ser registrada a evidência para posterior verifica�
 
 }
 
-
-/* =====================================================
-   ENVIAR EMAIL
-===================================================== */
 
 function registrarEmailNoConsole() {
 
@@ -2395,10 +2235,6 @@ function enviarEmailNCAssunto() {
 
 }
 
-
-/* =====================================================
-   LIMPA CHECKLIST
-===================================================== */
 
 function limparChecklist() {
 
